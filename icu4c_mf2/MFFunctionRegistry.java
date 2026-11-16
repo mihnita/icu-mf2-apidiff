@@ -1,15 +1,14 @@
 package icu.message2;
 
 class MFFunctionRegistry {
-    UBool getDefaultFormatterNameByType(UnicodeString formatterType, FunctionName name);
+    boolean getDefaultFormatterNameByType(String formatterType, FunctionName name);
     Function getFunction(FunctionName functionName);
-    static MFFunctionRegistry getStandardFunctionsRegistry(UErrorCode status);
+    static MFFunctionRegistry getStandardFunctionsRegistry();
 
     class Builder {
-        Builder(UErrorCode errorCode);
-
-        Builder adoptFunction(FunctionName functionName, Function function, UErrorCode errorCode);
+        Builder();
+        Builder adoptFunction(FunctionName functionName, Function function);
         MFFunctionRegistry build();
-        Builder setDefaultFormatterNameByType(UnicodeString type, FunctionName functionName, UErrorCode errorCode);
+        Builder setDefaultFormatterNameByType(String type, FunctionName functionName);
     }
 }

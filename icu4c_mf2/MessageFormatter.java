@@ -1,16 +1,14 @@
 package icu.message2;
 
 class MessageFormatter {
-    FormattedMessage format(MessageArguments arguments, UErrorCode status);
-    UnicodeString formatToString(MessageArguments arguments, UErrorCode status);
+    FormattedMessage format(MessageArguments arguments);
+    String formatToString(MessageArguments arguments);
     MFDataModel getDataModel();
     Locale getLocale();
-    UnicodeString getPattern();
+    String getPattern();
 
     class Builder {
-        Builder(UErrorCode status);
-
-        MessageFormatter build(UErrorCode status);
+        MessageFormatter build();
         Builder setBidiContext(UMFBidiContext dir);
         Builder setBidiIsolationStrategy(UMFBidiIsolationStrategy strategy);
         Builder setBidiIsolationStyle(UMFBidiIsolationStyle style);
@@ -18,7 +16,7 @@ class MessageFormatter {
         Builder setErrorHandlingBehavior(UMFErrorHandlingBehavior type);
         Builder setFunctionRegistry(MFFunctionRegistry functionRegistry);
         Builder setLocale(Locale locale);
-        Builder setPattern(UnicodeString pattern, UParseError parseError, UErrorCode status);
+        Builder setPattern(String pattern, UParseError parseError);
     }
 
     enum UMFBidiContext {

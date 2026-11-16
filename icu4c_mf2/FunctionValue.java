@@ -1,14 +1,14 @@
 package icu.message2;
 
 class FunctionValue {
-    UnicodeString formatToString(UErrorCode status);
+    String formatToString();
     UMFDirectionality getDirection();
     UMFBidiOption getDirectionAnnotation();
-    UnicodeString getFallback();
+    String getFallback();
     FunctionName getFunctionName();
     FunctionOptions getResolvedOptions();
-    UBool isNullOperand();
-    UBool isSelectable();
-    void selectKeys(UnicodeString[] keys, int32_t keysLen, int32_t[] prefs, int32_t prefsLen, UErrorCode status);
+    boolean isNullOperand();
+    boolean isSelectable();
+    void selectKeys(String[] keys, int keysLen, int[] prefs, int prefsLen);
     Formattable unwrap();
 }

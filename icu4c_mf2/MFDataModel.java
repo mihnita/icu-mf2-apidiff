@@ -1,7 +1,7 @@
 package icu.message2.data_model;
 
-type FunctionName = UnicodeString;
-type VariableName = UnicodeString;
+type FunctionName = String;
+type VariableName = String;
 
 class Binding {
     Binding();
@@ -9,8 +9,8 @@ class Binding {
 
     Expression getValue();
     VariableName getVariable();
-    static Binding input(UnicodeString variableName, Expression rhs, UErrorCode errorCode);
-    UBool isLocal();
+    static Binding input(String variableName, Expression rhs);
+    boolean isLocal();
 }
 
 class Expression {
@@ -18,15 +18,15 @@ class Expression {
 
     std::vector<Option> getAttributes();
     Operand getOperand();
-    Operator getOperator(UErrorCode status);
-    UBool isFunctionCall();
-    UBool isStandaloneAnnotation();
+    Operator getOperator();
+    boolean isFunctionCall();
+    boolean isStandaloneAnnotation();
 
     class Builder {
-        Builder(UErrorCode status);
+        Builder();
 
-        Builder addAttribute(UnicodeString key, Operand value, UErrorCode status);
-        Expression build(UErrorCode status);
+        Builder addAttribute(String key, Operand value);
+        Expression build();
         Builder setOperand(Operand rAnd);
         Builder setOperator(Operator rAtor);
     }
@@ -37,36 +37,36 @@ class Key {
     Key(Literal lit);
 
     Literal asLiteral();
-    UBool isWildcard();
+    boolean isWildcard();
 }
 
 class Literal {
     Literal();
-    Literal(UBool q, UnicodeString s);
+    Literal(boolean q, String s);
 
-    UBool isQuoted();
-    UnicodeString quoted();
-    UnicodeString unquoted();
+    boolean isQuoted();
+    String quoted();
+    String unquoted();
 }
 
 class Markup {
     Markup();
 
     std::vector<Option> getAttributes();
-    UnicodeString getName();
+    String getName();
     std::vector<Option> getOptions();
-    UBool isClose();
-    UBool isOpen();
-    UBool isStandalone();
+    boolean isClose();
+    boolean isOpen();
+    boolean isStandalone();
 
     class Builder {
-        Builder(UErrorCode status);
+        Builder();
 
-        Builder addAttribute(UnicodeString key, Operand value, UErrorCode status);
-        Builder addOption(UnicodeString key, Operand value, UErrorCode status);
-        Markup build(UErrorCode status);
+        Builder addAttribute(String key, Operand value);
+        Builder addOption(String key, Operand value);
+        Markup build();
         Builder setClose();
-        Builder setName(UnicodeString n);
+        Builder setName(String n);
         Builder setOpen();
         Builder setStandalone();
     }
@@ -81,12 +81,12 @@ class MFDataModel {
     std::vector<Variant> getVariants();
 
     class Builder {
-        Builder(UErrorCode status);
+        Builder();
 
-        Builder addBinding(Binding b, UErrorCode status);
-        Builder addSelector(VariableName selector, UErrorCode errorCode);
-        Builder addVariant(SelectorKeys keys, Pattern pattern, UErrorCode errorCode);
-        MFDataModel build(UErrorCode status);
+        Builder addBinding(Binding b);
+        Builder addSelector(VariableName selector);
+        Builder addVariant(SelectorKeys keys, Pattern pattern);
+        MFDataModel build();
         Builder setPattern(Pattern pattern);
     }
 }
@@ -94,13 +94,13 @@ class MFDataModel {
 class Operand {
     Operand();
     Operand(Literal l);
-    Operand(UnicodeString v);
+    Operand(String v);
 
     Literal asLiteral();
-    UnicodeString asVariable();
-    UBool isLiteral();
-    UBool isNull();
-    UBool isVariable();
+    String asVariable();
+    boolean isLiteral();
+    boolean isNull();
+    boolean isVariable();
 }
 
 class Operator {
@@ -110,19 +110,19 @@ class Operator {
     std::vector<Option> getOptions();
 
     class Builder {
-        Builder(UErrorCode status);
+        Builder();
 
-        Builder addOption(UnicodeString key, Operand value, UErrorCode status);
-        Operator build(UErrorCode status);
+        Builder addOption(String key, Operand value);
+        Operator build();
         Builder setFunctionName(FunctionName func);
     }
 }
 
 class Option {
     Option();
-    Option(UnicodeString n, Operand r);
+    Option(String n, Operand r);
 
-    UnicodeString getName();
+    String getName();
     Operand getValue();
 }
 
@@ -133,16 +133,16 @@ class Pattern {
     Iterator end();
 
     class Builder {
-        Builder(UErrorCode status);
+        Builder();
 
-        Builder add(Expression part, UErrorCode status);
-        Builder add(Markup part, UErrorCode status);
-        Builder add(UnicodeString part, UErrorCode status);
-        Pattern build(UErrorCode status);
+        Builder add(Expression part);
+        Builder add(Markup part);
+        Builder add(String part);
+        Pattern build();
     }
 
     class Iterator {
-        std::variant<UnicodeString, Expression, Markup> operator*();
+        std::variant<String, Expression, Markup> operator*();
         Iterator operator++();
     }
 }
@@ -153,10 +153,10 @@ class SelectorKeys {
     std::vector<Key> getKeys();
 
     class Builder {
-        Builder(UErrorCode status);
+        Builder();
 
-        Builder add(Key key, UErrorCode status);
-        SelectorKeys build(UErrorCode status);
+        Builder add(Key key);
+        SelectorKeys build();
     }
 }
 
